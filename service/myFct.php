@@ -7,6 +7,15 @@ function findByIdTable($nomTable,$id){
     $resultat=$requete->fetch(); // Mettre dans $ article l'article trouvé
     return $resultat;
 }
+
+function deleteByIdTable($nomTable,$id){
+    $connexion=connexion();
+    $sql="delete from $nomTable where id=?";
+    $requete=$connexion->prepare($sql);
+    $requete->execute([$id]);
+    return true;
+}
+
 function generatePage($file,$variables=[],$base="page/base.html.php"){  // generation d'une page
     // $file  : fichier html
     //$variables  : une variable en tableau qui contnient comme indices les noms des variables utilisées par $file
@@ -19,19 +28,15 @@ function generatePage($file,$variables=[],$base="page/base.html.php"){  // gener
         $content=ob_get_clean();
         //------------
         //---Ouvrir à nouveau la memoir tampon pour recevoir le fichier $base ave la variable $content
-
         ob_start();
         require_once($base);
         $page=ob_get_clean();
         echo $page;
-
     }else{
-
         // cas où le fichier $file n'existe pas
         echo "<h1>Desolé! Le fichier $file n'existe pas!</h1>"; 
         die;
     }
-
 }
 
 function connexion(){
@@ -42,9 +47,6 @@ function connexion(){
         echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
         die;
     }
-   
-
-
     return $connexion;
 }
 
@@ -52,8 +54,8 @@ function printr($tableau){
     echo "<pre>";
     print_r($tableau);
     echo "</pre>";
-
 }
+
 function listTable($nomTable){
     $sql="select * from $nomTable";
     $connexion=connexion();
@@ -62,5 +64,4 @@ function listTable($nomTable){
     $tables=$requete->fetchAll();
     return $tables;
 }
-
 ?>
