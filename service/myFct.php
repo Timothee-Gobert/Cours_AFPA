@@ -1,5 +1,12 @@
 <?php
-
+function findByIdTable($nomTable,$id){
+    $connexion=connexion(); // valeur retourner par la fonction connexion() du fichier myFct
+    $sql="select * from $nomTable where id=?"; // ecrire la requete sql correspondante
+    $requete=$connexion->prepare($sql); // dire à PHP de préparer la requete sql
+    $requete->execute([$id]); // executer la requete avec id = $id
+    $resultat=$requete->fetch(); // Mettre dans $ article l'article trouvé
+    return $resultat;
+}
 function generatePage($file,$variables=[],$base="page/base.html.php"){  // generation d'une page
     // $file  : fichier html
     //$variables  : une variable en tableau qui contnient comme indices les noms des variables utilisées par $file
@@ -27,14 +34,10 @@ function generatePage($file,$variables=[],$base="page/base.html.php"){  // gener
 
 }
 
-
-
-
-
 function connexion(){
     $dns="mysql:host=localhost;dbname=dwwm;charset=utf8";
     try{
-        $connexion=new PDO($dns,'admin','4321');
+        $connexion=new PDO($dns,'root','root');
     }catch(Exception $e){
         echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
         die;

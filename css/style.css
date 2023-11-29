@@ -157,3 +157,15 @@ background-color: lightblue;width:250px;}
 .niveau-v1 li:hover .niveau-v2{display:block;}
 .niveau-v2 li:hover a{display:block;background-color: yellow;
 color:navy;}
+#modal_cv{
+    width: 70%;
+    min-height: 100vh;
+    position: absolute;
+    top: 5vh;
+    margin-left: 100%;
+}
+
+#modal_cv:target{
+    margin-left: 20%;
+    transition: 2000ms;
+}

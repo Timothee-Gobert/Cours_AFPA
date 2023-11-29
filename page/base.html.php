@@ -22,6 +22,8 @@
                 </ul>
             </li>
             <li><a href="">Parametre</a></li>
+            <li><a href="cv.php">CV</a></li>
+            <li><a href="#modal_cv">modal_CV</a></li>
         </ul>
     </div>
     <div id="main">
@@ -50,6 +52,15 @@
     </div>
     <div id="footer">
     <h2>&copy Copyright DWWM 2023</h2>
+    </div>
+
+    <div id="modal_cv">
+        <?php 
+            ob_start(); 
+            require_once('page/cv/index1.html');
+            $mod=ob_get_clean();
+            echo $mod;
+        ?>
     </div>
 </body>
 </html>
