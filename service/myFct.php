@@ -64,4 +64,17 @@ function listTable($nomTable){
     $tables=$requete->fetchAll();
     return $tables;
 }
+
+function testDelete($id){
+    $connexion=connexion();
+    $sql="select * from ligneCommande where article_id=?";
+    $requete=$connexion->prepare($sql);
+    $requete->execute([$id]);
+    $resultat=$requete->fetch();
+    if($resultat){
+        return false;
+    }else{
+        return true;
+    }
+}
 ?>

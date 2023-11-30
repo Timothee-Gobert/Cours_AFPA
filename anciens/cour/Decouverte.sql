@@ -56,8 +56,8 @@ create table produit like article;
 -- Copier le contenu de la table article vers produit
 insert into produit select * from article;
 
--- Supprimer la table product
-drop table product;
+-- Supprimer la table produit
+drop table produit;
 
 -- Supprimer l'enregistrement dans numArticle=BB001
 delete from produit where numArticle='BB001';
@@ -87,6 +87,127 @@ create view V_Commande_Commande as
 select numcommande as commande , dateCommande as date, numArticle as article, designationArticle as designation, prixUniqueArticle as pu, quantite as Q, prixUniqueArticle*quantite as montant
 from commande,lignecommande,article 
 where lignecommande.commande_id=commande.id and lignecommande.article_id=article.id;
+
+-- On a remarquer que id continue à s'incrémenter à partir de sa dernière valeur
+-- Vider la table produit tout en réinitialisant l'id à 1
+truncate table produit;
+
+-- Création de la table commande
+create table commande (
+    id int auto_increment primary key,
+    numcommande varchar(250) not null unique,
+    dateComande datetime default now(),
+    client_id int not null,
+    foreign key(client_id) references client(id)
+);
+-- -- foreign key permet de ne saisir que les valeurs des id de la table client 
+
+-- Insertion de donnée dans la table commande en testant la clause default
+insert into commande (numCommande,client_id) values
+('CDE00125','1');
+
+-- Test sur foreign key (on va donner une valeur à client_id qui n'appartient pas à la table
+-- client)
+insert into commande (numCommande,client_id) values
+('CDE00126','10');
+
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dwwm`.`commande`, CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`))
+
+-- Test sur l'unicité de la colonne numCommande
+-- C'est à dire saisie une nouvelle ligne dont numCommande existe déjà
+insert into commande (numCommande,client_id) values
+('CDE00125','4');
+
+MariaDB [dwwm]> insert into commande (numCommande,client_id) values
+    -> ('CDE00125','4');
+ERROR 1062 (23000): Duplicate entry 'CDE00125' for key 'numcommande'
+
+-- Saisie de données avec dateCommande manuelle
+insert into commande (numCommande,dateComande,client_id) values
+('CDE00127','2023-01-10',1),
+('CDE00522','2023-03-10',3);
+
+-- Requete numCommande, dateCommande, numClient, nomClient
+select * from commande,client where commande.client_id=client.id;
+-- ou
+select * from commande cde, client clt where cde.client_id=clt.id;
+
+select commande.numcommande, commande.dateComande, client.numClient, client.nomClient, client.adresseClient 
+from commande,client 
+where commande.client_id=client.id;
+-- ou
+select cde.numcommande, cde.dateComande, clt.numClient, clt.nomClient, clt.adresseClient 
+from commande cde,client clt
+where cde.client_id=clt.id;
+
+-- Creation d'une view (création d'une table dynamique)
+create view V_Commande_Client as 
+select commande.numcommande, commande.dateComande, client.numClient, client.nomClient, client.adresseClient 
+from commande,client 
+where commande.client_id=client.id;
+
+select * from V_Commande_Client;
++-------------+---------------------+-----------+-----------------+------------------------------------------+
+| numcommande | dateComande         | numClient | nomClient       | adresseClient                            |
++-------------+---------------------+-----------+-----------------+------------------------------------------+
+| CDE00125    | 2023-11-10 10:04:02 | JA001     | Jamel Azouhri   | 1 rue des colombe 33310 LORMONT          |
+| CDE00127    | 2023-01-10 00:00:00 | JA001     | Jamel Azouhri   | 1 rue des colombe 33310 LORMONT          |
+| CDE00321    | 2023-02-10 00:00:00 | GT001     | Timothée Gobert | 7 rue du petit huis 89510 VERON          |
+| CDE00522    | 2023-03-10 00:00:00 | YT001     | Yanick Thomson  | 159B route de fleuri 91170 VIRYCHATILLON |
++-------------+---------------------+-----------+-----------------+------------------------------------------+
+
+-- Afficher la creation de la view
+show create table V_Commande_Client;
+
+-- Création de la table ligneCommande
+create table ligneCommande (
+    id int auto_increment primary key,
+    commande_id int not null,
+    article_id int not null,
+    quantite numeric(10,2) not null,
+    foreign key(commande_id) references commande(id),
+    foreign key(article_id) references article(id)
+);
+
+-- Inserer ligne dans ligneCommande
+insert into lignecommande(commande_id,article_id,quantite) values
+(5,5,6),
+(5,2,12),
+(6,5,60);
+
+select commande.numcommande, commande.dateCommande, article.numArticle, article.designationArticle, article.prixUniqueArticle, lignecommande.quantite, prixUniqueArticle*quantite
+from commande,lignecommande,article 
+where lignecommande.commande_id=commande.id and lignecommande.article_id=article.id;
+
+-- ici as permet de renommer la colonne 
+-- et si le nom de la colonne est unique pas besoin de préciser la table dans laquelle elle se trouve
+select numcommande as commande , dateCommande as date, numArticle as article, designationArticle as designation, prixUniqueArticle as pu, quantite as Q, prixUniqueArticle*quantite as montant
+from commande,lignecommande,article 
+where lignecommande.commande_id=commande.id and lignecommande.article_id=article.id;
+
+--creation de la view v_commande_commande
+create view V_Commande_Commande as 
+select numcommande as commande , dateCommande as date, numArticle as article, designationArticle as designation, prixUniqueArticle as pu, quantite as Q, prixUniqueArticle*quantite as montant
+from commande,lignecommande,article 
+where lignecommande.commande_id=commande.id and lignecommande.article_id=article.id;
+
+select 
+ numclient as Client ,
+ numcommande as commande, 
+ numArticle as article, 
+ designationArticle as designation, 
+ prixUniqueArticle as pu, 
+ quantite as qte, 
+ prixUniqueArticle*quantite as montant
+from 
+ client,
+ commande,
+ lignecommande,
+ article 
+where 
+ lignecommande.commande_id=commande.id 
+ and lignecommande.article_id=article.id 
+ and commande.client_id=client.id;
 
 create table t1(id int,valeur varchar(2));
 insert into t1 values

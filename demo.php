@@ -1,6 +1,6 @@
 <a href="demo.php?action=read&id=2">Afficher id=2</a>
 <a href="demo.php?action=update&id=4">Modifier id=4</a>
-<a href="demo.php?action=delete&id=5">Supprimer  id=5</a>
+<a href="demo.php?action=delete&id=5">Supprimer id=5</a>
 
 <?php
     require_once("service/myFct.php");
@@ -35,9 +35,18 @@
                 break;
             case'delete':
                 $id=$_GET['id']; // mettre dans une variable $id la valeur de $_GET['id']
-                deleteByIdTable('article',$id);
-                $sousPageHtml="page/article/form.html.php";
-                generatePage($sousPageHtml);
+                $test=testDelete($id);
+                    if($test){
+                        deleteByIdTable('article',$id);
+                        $sousPageHtml="page/article/form.html.php";
+                        generatePage($sousPageHtml);
+                    }else{
+                        $sousPageHtml="page/erreur/erreur.html.php";
+                        $variables=[
+                            'message'=>"Impossible de supprimer cet article !",
+                        ];
+                        generatePage($sousPageHtml,$variables);
+                    }
                 break;
             case'list':
                 $sousPageHtml="page/article/form.html.php";
@@ -45,7 +54,12 @@
                 break;
         }
     }    
-        if($action=='read'){ // tester si action == 'read'
+
+    //---------- MES FONCTIONS ---------------------
+
+
+
+        /*if($action=='read'){ // tester si action == 'read'
             $id=$_GET['id']; // mettre dans une variable $id la valeur de $_GET['id']
 
             
@@ -58,7 +72,7 @@
                 'prixUnitaire'=>$article['prixUnitaire']
             ];
             generatePage($sousPageHtml,$variables);
-        }
+        }*/
     
     //print_r($_GET);
 ?>
