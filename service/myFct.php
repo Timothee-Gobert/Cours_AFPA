@@ -1,4 +1,38 @@
 <?php
+require_once("config.php");
+// nouvelle facon de se connecter avec filezilla
+
+function connexion($host=HOST,$dbname=DBNAME,$user=USER,$password=PASSWORD){
+    $dns="mysql:host=$host;dbname=$dbname;charset=utf8";
+    try{
+        $connexion=new PDO($dns,$user,$password);
+    }catch(Exception $e){
+        echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
+        die;
+    }
+    return $connexion;
+}
+
+/* encienne facon de se connecter sans file zilla (sans etre a distance)
+
+function connexion(){
+    $dns="mysql:host=localhost;dbname=dwwm;charset=utf8";
+    try{
+        $connexion=new PDO($dns,'root','root');
+    }catch(Exception $e){
+        echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
+        die;
+    }
+    return $connexion;
+}
+
+function printr($tableau){
+    echo "<pre>";
+    print_r($tableau);
+    echo "</pre>";
+}
+*/
+
 function findByIdTable($nomTable,$id){
     $connexion=connexion(); // valeur retourner par la fonction connexion() du fichier myFct
     $sql="select * from $nomTable where id=?"; // ecrire la requete sql correspondante
@@ -37,17 +71,6 @@ function generatePage($file,$variables=[],$base="page/base.html.php"){  // gener
         echo "<h1>Desolé! Le fichier $file n'existe pas!</h1>"; 
         die;
     }
-}
-
-function connexion(){
-    $dns="mysql:host=localhost;dbname=dwwm;charset=utf8";
-    try{
-        $connexion=new PDO($dns,'root','root');
-    }catch(Exception $e){
-        echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
-        die;
-    }
-    return $connexion;
 }
 
 function printr($tableau){
