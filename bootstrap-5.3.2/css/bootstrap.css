@@ -7457,6 +7457,18 @@ textarea.form-control-lg {
   top: 0 !important;
 }
 
+.top-10 {
+  top: 10% !important;
+}
+.top-20 {
+  top: 20% !important;
+}
+.top-30 {
+  top: 30% !important;
+}
+.top-40 {
+  top: 40% !important;
+}
 .top-50 {
   top: 50% !important;
 }
@@ -7484,7 +7496,18 @@ textarea.form-control-lg {
 .start-50 {
   left: 50% !important;
 }
-
+.start-60 {
+  left: 60% !important;
+}
+.start-70 {
+  left: 70% !important;
+}
+.start-80 {
+  left: 80% !important;
+}
+.start-90 {
+  left: 90% !important;
+}
 .start-100 {
   left: 100% !important;
 }

@@ -50,7 +50,7 @@ function deleteByIdTable($nomTable,$id){
     return true;
 }
 
-function generatePage($file,$variables=[],$base="page/base.html.php"){  // generation d'une page
+function generatePage($file,$variables=[],$base="page/base-bs.html.php"){  // generation d'une page
     // $file  : fichier html
     //$variables  : une variable en tableau qui contnient comme indices les noms des variables utilisées par $file
     //Exemple ['x'=>2,'y'=>5,'z'=>10]   . avec extract($variables) , on a $x=2;  $y=5 et $z=10

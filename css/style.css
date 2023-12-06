@@ -94,11 +94,11 @@
 @media print {
     #header,#aside,#footer{display:none;}
     #section{width:100% !important;}
-    .btn{display:none !important;}
+    .bouton{display:none !important;}
 }
 
-.btn{width:125px;line-height:50px;border-radius: 5px;display:block;text-align:center;margin:3px;}
-.btn_action{display:block;width:30%;border-radius:2px;}
+.bouton{width:125px;line-height:50px;border-radius: 5px;display:block;text-align:center;margin:3px;}
+.bouton_action{display:block;width:30%;border-radius:2px;}
 .flex_space_between{display:flex;justify-content: space-between;}
 .bg_navy{background-color: navy;color:white;}
 .bg_blue{background-color: blue;color:white;}
