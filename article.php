@@ -6,6 +6,9 @@
     extract($_GET);
 
     switch($action){
+        //-------------------AJAX-------------------
+
+        //------------------------------------------
         case 'afficher':
             $id=$_GET['id'];
             $article=findByIdTable('article',$id);

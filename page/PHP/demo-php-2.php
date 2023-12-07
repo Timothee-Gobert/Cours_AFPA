@@ -3,7 +3,7 @@
 <a href="demo.php?action=delete&id=5">Supprimer id=5</a>
 
 <?php
-    require_once("service/myFct.php");
+    require_once("../../service/myFct.php");
     if(isset($_GET['action'])){ // tester si $_GET contient comme indice 'action'
         $action=$_GET['action']; // mettre dans une variable $action la valeur de $_GET['action'] 
         switch($action){

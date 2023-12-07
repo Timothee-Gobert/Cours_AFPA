@@ -1,7 +1,7 @@
-<a href="demo.php?action=read&id=2">Afficher id=2</a>
+<a href="demo-php-1.php?action=read&id=2">Afficher id=2</a>
 
 <?php
-    require_once("service/myFct.php");
+    require_once("../../service/myFct.php");
     if(isset($_GET['action'])){ // tester si $_GET contient comme indice 'action'
         $action=$_GET['action']; // mettre dans une variable $action la valeur de $_GET['action'] 
         if($action=='read'){ // tester si action == 'read'
@@ -15,14 +15,14 @@
             $article=$requete->fetch(); // Mettre dans $ article l'article trouvé*/
 
             $article=findByIdTable('article',$id);
-            $sousPageHtml="page/article/form.html.php";
+            $sousPageHtml="../article/form.html.php";
             $variables=[
                 'id'=>$article['id'],
                 'numArticle'=>$article['numArticle'],
                 'designation'=>$article['designation'],
                 'prixUnitaire'=>$article['prixUnitaire']
             ];
-            generatePage($sousPageHtml,$variables);
+            generatePage($sousPageHtml,$variables,"../../page/article/form.html.php");
         }
     }
     //print_r($_GET);

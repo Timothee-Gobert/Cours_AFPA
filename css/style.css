@@ -7,6 +7,47 @@
 .border-top-4{border-top: 4px solid white;}
 #div_btn_article{padding-top: 10px;}
 #div_btn_client{padding-top: 10px;}
+
+/*----------------------CSS-MODAL-AJAX----------------------*/
+#modal_art{
+    width: 98%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    visibility: hidden;
+}
+#modal_close{
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    font-size: 2em;
+    color: beige;
+}
+#modal_art:target{
+    visibility: visible;
+}
+#modal_art_content{
+    width: 50%;
+    height: 50%;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 20px;
+}
+.list_btn{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    border-top: 4px solid navy;
+    padding: 10px;
+}
+/*----------------------------------------------------------*/
+
+
+
 #accueil{
     width:100%;
     height:100vh;
