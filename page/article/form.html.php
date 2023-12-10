@@ -20,7 +20,7 @@
     </tr>
 </table>
 <div id="div_btn_article" class="flex_space_between border-top-2">
-    <a href="article.php" class="btn bg_green">Retour à la liste</a>
+    <a href="/article.php" class="btn bg_green">Retour à la liste</a>
     <a href="" class="btn bg_blue">Annuler</a>
     <a href="" class="btn bg_red" <?=$etat?>>Supprimer</a>
     <input type="submit" class="btn bg_green" <?=$etat?> value="Valider">
