@@ -36,7 +36,7 @@
 
 <body>
       <!-- header -->
-      <div class="container-fluid my-4">
+      <div class="">
             <nav class="navbar navbar-expand-md bg-dark text-light fixed-top rounded-bottom">
                   <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
                   <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle='collapse'><i

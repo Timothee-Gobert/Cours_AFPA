@@ -7,6 +7,22 @@
 
     switch($action){
         //-------------------AJAX-------------------
+        case "save":
+            $response_json=json_encode($_POST);
+            extract($_POST);
+            $connexion=connexion();
+            if($id==0){
+                $sql="insert into article (numArticle,designation,prixUnitaire) value (?,?,?)";
+                $requete=$connexion->prepare($sql);
+                $requete->execute([$numArticle,$designation,$prixUnitaire]);
+            }else{
+                $sql="update article set numArticle=?,designation=?,prixUnitaire=? where id=?";
+                $requete=$connexion->prepare($sql);
+                $requete->execute([$numArticle,$designation,$prixUnitaire,$id]);
+            }
+            echo $response_json;
+            exit;
+            break;
         case "search":
             $mot=$_POST['mot'];
             $connexion=connexion();

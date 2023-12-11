@@ -23,9 +23,16 @@
 #modal_close{
     position: absolute;
     top: 15px;
-    right: 30px;
+    right: 15px;
     font-size: 2em;
     color: beige;
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    color:aliceblue;
+    border-radius: 50%;
+    text-align: center;
+    justify-content: center;
 }
 #modal_art:target{
     visibility: visible;
@@ -36,6 +43,7 @@
     background-color: aliceblue;
     border-radius: 10px;
     padding: 20px;
+    position: relative;
 }
 .list_btn{
     display: flex;
@@ -43,6 +51,12 @@
     margin-top: 10px;
     border-top: 4px solid navy;
     padding: 10px;
+}
+#loader{
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    visibility: hidden;
 }
 /*----------------------------------------------------------*/
 

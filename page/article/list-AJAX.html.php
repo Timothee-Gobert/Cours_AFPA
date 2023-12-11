@@ -1,5 +1,9 @@
 <h1 class="titre text-white">LISTE DES ARTICLE</h1>
-<a href="#modal_art" id="show_modal_art">Modal</a>
+<a href="#modal_art" id="show_modal_art" class="hidden">Modal</a>
+<div class="d-flex justify-content-between mb-4">
+      <button class="btn btn-md btn-primary" onclick="creer()">Nouvel Article</button>
+      <button class="btn btn-md btn-success" onclick="window.print()">Imprimer</button>
+</div>
 <table class="w100">
       <thead>
             <tr class='h2em'>
@@ -22,9 +26,10 @@
 </table>
 <div id="modal_art">
       <div id="modal_art_content">
+            
             <h1 class="titre text-center">Saisie article</h1>
             <a href="#" id="modal_close">&times</a>
-            <form action="">
+            <div action="">
                   <div class="zone_saisie my-2 text-primary fw-bold">
                         <label for="id" class="lab20">ID</label>
                         <input type="text" id="id" name="id" value="" class="form-control w20">
@@ -42,35 +47,69 @@
                         <input type="text" id="prixUnitaire" name="prixUnitaire" value="" class="form-control w20">
                   </div>
                   <div class="list_btn my-4 flex justify-content-between border-top">
-                        <button class="btn btn-md btn-primary">Annuler</button>
-                        <button class="btn btn-md btn-danger">Supprimer</button>
-                        <button class="btn btn-md btn-success">Enregistrer</button>
+                        <button id="btn_cancel" class="btn btn-md btn-primary">Annuler</button>
+                        <button id="btn_delete" class="btn btn-md btn-danger">Supprimer</button>
+                        <button id="btn_save" class="btn btn-md btn-success" onclick="enregistrer()">Enregistrer</button>
                   </div>
-            </form>
+            </div>
+            <div class="spinner-border" role="status" id="loader">
+                  <span class="visually-hidden">Loading...</span>
+            </div>
+            <!-- <img src="" alt="" id="load"> -->
       </div>
 </div>
 <script>
-    function touche(event){
-        if(event.keyCode==13){
-            chercher();
-            exit;
-        }
-    }
-function rechercher() {
-    //alert(mot.value);
-    let xhr=new XMLHttpRequest();
-    xhr.open("POST","article-ajax.php?action=search");
-    let data=new FormData();
-    data.append("mot",mot.value);
-    xhr.send(data);
-    xhr.onload=function(){
-        let response=xhr.responseText;
-        tbody_article.innerHTML=response;
-    }
+      function creer(){
+            id.value=0;
+            numArticle.value="";
+            designation.value="";
+            prixUnitaire.value="";
+            show_modal_art.click()="";
+      }
+function enregistrer(){
+      debutAttente();
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST","article-ajax.php?action=save");
+      let data = new FormData();
+      data.append('id',parseInt(id.value));
+      data.append('numArticle',numArticle.value);
+      data.append('designation',designation.value);
+      data.append('prixUnitaire',prixUnitaire.value);
+      xhr.send(data);
+      xhr.onload=function(){
+            setTimeout("finAttente()",2000);
+            let response =xhr.responseText;
+            modal_close.click();
+            rechercher();
+            alert(response);
+      }
 }
 
-function afficher(article_id) {
+function touche(event) {
+      if (event.keyCode == 13) {
+            chercher();
+            exit;
+      }
+}
+
+function rechercher() {
+      //alert(mot.value);
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "article-ajax.php?action=search");
+      let data = new FormData();
+      data.append("mot", mot.value);
+      xhr.send(data);
+      xhr.onload = function() {
+            let response = xhr.responseText;
+            tbody_article.innerHTML = response;
+      }
+}
+function modifier(article_id){
+      afficher(article_id,1);
+}
+function afficher(article_id,etat=0) {
       // on créer un objet WMLHTTP et on le met dans xhr
+      debutAttente();
       let xhr = new XMLHttpRequest();
       // Syntaxe open("methode d'envoi","adresse url pour le traitement php)
       xhr.open("POST", "article-ajax.php?action=show&id=" + article_id);
@@ -84,9 +123,32 @@ function afficher(article_id) {
             designation.value = response.designation;
             prixUnitaire.value = response.prixUnitaire;
             show_modal_art.click();
-
+            // finAttente(); 
+            // comme c'est trop rapide on met un timer
+            setTimeout("finAttente()",2000);
             //alert(response.id + ' - ' + response.numArticle + ' - ' + response.designation);
             //console.log(response);
+            if(etat==0){
+                  id.disabled=true;
+                  numArticle.disabled=true;
+                  designation.disabled=true;
+                  prixUnitaire.disabled=true;
+            }else{
+                  id.disabled=true;
+                  numArticle.disabled=false;
+                  designation.disabled=false;
+                  prixUnitaire.disabled=false;
+            }
       }
+}
+
+function debutAttente() {
+      let loader = document.getElementById("loader");
+      loader.setAttribute("style", "visibility: visible");
+}
+
+function finAttente() {
+      let loader = document.getElementById("loader");
+      loader.setAttribute("style", "visibility: hidden");
 }
 </script>
