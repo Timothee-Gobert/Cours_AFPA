@@ -4,13 +4,13 @@
       <button class="btn btn-md btn-primary" onclick="creer()">Nouveau Client</button>
       <button class="btn btn-md btn-success" onclick="window.print()">Imprimer</button>
 </div>
-<table class="w100">
+<table class="table table-striped table-hover w100">
       <thead>
             <tr class='h2em'>
                   <th class='w10 border'>IMAGE</th>
-                  <th class='w10 border'>CODE</th>
-                  <th class='w50 border'>DESIGNATION</th>
-                  <th class='w10 border'>PRIX<br>UNITAIRE</th>
+                  <th class='w10 border'>N° Client</th>
+                  <th class='w10 border'>Nom</th>
+                  <th class='w30 border'>Adresse</th>
                   <th class='w20 border'>ACTIONS</th>
             </tr>
       </thead>
@@ -20,7 +20,7 @@
 
       <tfoot>
             <tr class='h2em'>
-                  <th colspan="5" class='w100 border center'> Nombre clients:6 </th>
+                  <th colspan="5" class='w100 border center'> Nombre clients: $nbre </th>
             </tr>
       </tfoot>
 </table>
@@ -35,20 +35,20 @@
                         <input type="text" id="id" name="id" value="" class="form-control w20">
                   </div>
                   <div class="zone_saisie my-2 text-primary fw-bold">
-                        <label for="numClient" class="lab20">CODE</label>
+                        <label for="numClient" class="lab20">N° Client</label>
                         <input type="text" id="numClient" name="numClient" value="" class="form-control w80">
                   </div>
                   <div class="zone_saisie my-2 text-primary fw-bold">
-                        <label for="nomClient" class="lab20">Désignation</label>
+                        <label for="nomClient" class="lab20">Nom</label>
                         <input type="text" id="nomClient" name="nomClient" value="" class="form-control w80">
                   </div>
                   <div class="zone_saisie my-2 text-primary fw-bold">
-                        <label for="adresseClient" class="lab20">P.U.</label>
-                        <input type="text" id="adresseClient" name="adresseClient" value="" class="form-control w20">
+                        <label for="adresseClient" class="lab20">Adresse</label>
+                        <input type="text" id="adresseClient" name="adresseClient" value="" class="form-control w80">
                   </div>
                   <div class="list_btn my-4 flex justify-content-between border-top">
-                        <button id="btn_cancel" class="btn btn-md btn-primary">Annuler</button>
-                        <button id="btn_delete" class="btn btn-md btn-danger">Supprimer</button>
+                        <a href="#"><button id="btn_cancel" class="btn btn-md btn-primary">Annuler</button></a>
+                        <button id="btn_delete" class="btn btn-md btn-danger" onclick="supprimer()">Supprimer</button>
                         <button id="btn_save" class="btn btn-md btn-success" onclick="enregistrer()">Enregistrer</button>
                   </div>
             </div>
@@ -60,12 +60,34 @@
 </div>
 <script>
       function creer(){
+            id.disabled=true;
+            numClient.disabled=false;
+            nomClient.disabled=false;
+            adresseClient.disabled=false;
+            btn_save.disabled=false;
+            btn_delete.disabled=true;
             id.value=0;
             numClient.value="";
             nomClient.value="";
             adresseClient.value="";
-            show_modal_clt.click()="";
+            show_modal_clt.click();
       }
+      function supprimer(){
+            debutAttente();
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST","client-ajax.php?action=delete");
+            let data = new FormData();
+            data.append('id',parseInt(id.value));
+            xhr.send(data);
+            xhr.onload=function(){
+                  setTimeout("finAttente()",2000);
+                  let response =xhr.responseText;
+                  modal_close.click();
+                  rechercher();
+                  alert(response);
+      }
+      
+}
 function enregistrer(){
       debutAttente();
       let xhr = new XMLHttpRequest();
@@ -133,11 +155,15 @@ function afficher(client_id,etat=0) {
                   numClient.disabled=true;
                   nomClient.disabled=true;
                   adresseClient.disabled=true;
+                  btn_delete.disabled=true;
+                  btn_save.disabled=true;
             }else{
                   id.disabled=true;
                   numClient.disabled=false;
                   nomClient.disabled=false;
                   adresseClient.disabled=false;
+                  btn_delete.disabled=false;
+                  btn_save.disabled=false;
             }
       }
 }

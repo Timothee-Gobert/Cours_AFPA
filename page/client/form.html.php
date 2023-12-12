@@ -12,7 +12,7 @@
     </tr>
     <tr>
         <td class="w20 text-1_25em obligatoire">Nom Client</td>
-        <td><input type="text" class="form-input w80" value="<?=$nomClient?>" <?=$etat?>></td>
+        <td><input type="text" class="form-input w20" value="<?=$nomClient?>" <?=$etat?>></td>
     </tr>
     <tr>
         <td class="w20 text-1_25em">PU</td>

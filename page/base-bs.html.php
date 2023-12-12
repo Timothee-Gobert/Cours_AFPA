@@ -4,9 +4,9 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="/bootstrap-5.3.2/css/bootstrap.css">
-      <link rel="stylesheet" href="/fontawesome-free-6.5.0/css/all.css">
-      <script src="/bootstrap-5.3.2/js/bootstrap.bundle.js" defer></script>
+      <link rel="stylesheet" href="./bootstrap-5.3.2/css/bootstrap.css">
+      <link rel="stylesheet" href="./fontawesome-free-6.5.0/css/all.css">
+      <script src="./bootstrap-5.3.2/js/bootstrap.bundle.js" defer></script>
       <?php
             require_once("Accordion.html.php");
       ?>
@@ -51,6 +51,9 @@
                                           class="nav-link text-light fw-bold">Article AJAX</a>
                               </li>
                               <li class="nav-item"><a href="client.php" class="nav-link text-light fw-bold">Client</a>
+                              </li>
+                              <li class="nav-item"><a href="Client-AJAX.php"
+                                          class="nav-link text-light fw-bold">Client AJAX</a>
                               </li>
                               <li class="nav-item dropdown"><a href=""
                                           class="nav-link text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown"

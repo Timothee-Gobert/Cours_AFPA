@@ -37,6 +37,9 @@
 #modal_art:target{
     visibility: visible;
 }
+.modal_close_p{
+    color:aliceblue;
+}
 #modal_art_content{
     width: 50%;
     height: 50%;
@@ -180,7 +183,7 @@
 
 .bouton{width:125px;line-height:50px;border-radius: 5px;display:block;text-align:center;margin:3px;}
 .bouton_action{display:block;width:30%;border-radius:2px;}
-.flex_space_between{display:flex;justify-content: space-between;}
+.flex_space_between{display:flex;justify-content: space-evenly;}
 .bg_navy{background-color: navy;color:white;}
 .bg_blue{background-color: blue;color:white;}
 .bg_red{background-color: red;color:white;}

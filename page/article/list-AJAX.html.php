@@ -20,7 +20,7 @@
 
       <tfoot>
             <tr class='h2em'>
-                  <th colspan="5" class='w100 border center'> Nombre articles:6 </th>
+                  <th colspan="5" class='w100 border center'> Nombre articles: </th>
             </tr>
       </tfoot>
 </table>
@@ -47,8 +47,8 @@
                         <input type="text" id="prixUnitaire" name="prixUnitaire" value="" class="form-control w20">
                   </div>
                   <div class="list_btn my-4 flex justify-content-between border-top">
-                        <button id="btn_cancel" class="btn btn-md btn-primary">Annuler</button>
-                        <button id="btn_delete" class="btn btn-md btn-danger">Supprimer</button>
+                        <a href="#"><button id="btn_cancel" class="btn btn-md btn-primary">Annuler</button></a>
+                        <button id="btn_delete" class="btn btn-md btn-danger" onclick="supprimer()">Supprimer</button>
                         <button id="btn_save" class="btn btn-md btn-success" onclick="enregistrer()">Enregistrer</button>
                   </div>
             </div>
@@ -60,12 +60,35 @@
 </div>
 <script>
       function creer(){
+            id.disabled=true;
+            numArticle.disabled=false;
+            designation.disabled=false;
+            prixUnitaire.disabled=false;
+            btn_save.disabled=false;
             id.value=0;
             numArticle.value="";
             designation.value="";
             prixUnitaire.value="";
-            show_modal_art.click()="";
+            btn_delete.disabled=true;
+            show_modal_art.click();
       }
+      function supprimer(){
+            debutAttente();
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST","article-ajax.php?action=delete");
+            let data = new FormData();
+            data.append('id',parseInt(id.value));
+            xhr.send(data);
+            xhr.onload=function(){
+                  setTimeout("finAttente()",2000);
+                  let response =xhr.responseText;
+                  modal_close.click();
+                  rechercher();
+                  alert(response);
+      }
+      
+}
+
 function enregistrer(){
       debutAttente();
       let xhr = new XMLHttpRequest();
@@ -104,6 +127,7 @@ function rechercher() {
             tbody_article.innerHTML = response;
       }
 }
+
 function modifier(article_id){
       afficher(article_id,1);
 }
@@ -128,16 +152,20 @@ function afficher(article_id,etat=0) {
             setTimeout("finAttente()",2000);
             //alert(response.id + ' - ' + response.numArticle + ' - ' + response.designation);
             //console.log(response);
-            if(etat==0){
+            if(etat==0){// etat ==0 affichage
                   id.disabled=true;
                   numArticle.disabled=true;
                   designation.disabled=true;
                   prixUnitaire.disabled=true;
-            }else{
+                  btn_delete.disabled=true;
+                  btn_save.disabled=true;
+            }else{// etat <> 0 cacher
                   id.disabled=true;
                   numArticle.disabled=false;
                   designation.disabled=false;
                   prixUnitaire.disabled=false;
+                  btn_delete.disabled=false;
+                  btn_save.disabled=false;
             }
       }
 }

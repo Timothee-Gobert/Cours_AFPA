@@ -7,6 +7,17 @@
 
     switch($action){
         //-------------------AJAX-------------------
+        case "delete":
+            $response_json=json_encode($_POST);
+            extract($_POST);
+            $connexion=connexion();
+            $sql="delete from article where id=?";
+            $requete=$connexion->prepare($sql);
+            $requete->execute([$id]);
+            echo $response_json;
+            exit;
+            break;
+        
         case "save":
             $response_json=json_encode($_POST);
             extract($_POST);
@@ -39,8 +50,7 @@
                 $prixUnitaire=$valeur['prixUnitaire'];
                 $actions=
                 "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
-                <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a> 
-                <a href='javascript:supprimer($id)' class='btn_action bg_red'>Supprimer</a>";
+                <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
                 $ligne.="
                     <tr class='h2em'>
                         <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>
@@ -125,8 +135,7 @@
         $prixUnitaire=$valeur['prixUnitaire'];
         $actions=
         "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
-        <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a> 
-        <a href='javascript:supprimer($id)' class='btn_action bg_red'>Supprimer</a>";
+        <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
         $ligne.="
             <tr class='h2em'>
                 <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>

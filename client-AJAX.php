@@ -7,6 +7,17 @@
 
     switch($action){
         //-------------------AJAX-------------------
+        case "delete":
+            $response_json=json_encode($_POST);
+            extract($_POST);
+            $connexion=connexion();
+            $sql="delete from client where id=?";
+            $requete=$connexion->prepare($sql);
+            $requete->execute([$id]);
+            echo $response_json;
+            exit;
+            break;
+        
         case "save":
             $response_json=json_encode($_POST);
             extract($_POST);
@@ -23,6 +34,7 @@
             echo $response_json;
             exit;
             break;
+        
         case "search":
             $mot=$_POST['mot'];
             $connexion=connexion();
@@ -39,11 +51,10 @@
                 $adresseClient=$valeur['adresseClient'];
                 $actions=
                 "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
-                <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a> 
-                <a href='javascript:supprimer($id)' class='btn_action bg_red'>Supprimer</a>";
+                <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
                 $ligne.="
                     <tr class='h2em'>
-                        <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>
+                        <td class='border center'><img class='zoom' src='img/femme1.jpg' width='20%' alt='' /></td>
                         <td class='border center'>$numClient</td>
                         <td class='border'>$nomClient</td>
                         <td class='border right'>$adresseClient</td>
@@ -54,6 +65,7 @@
             echo ($ligne);
             exit;
             break;
+            
         case "show":
             $id=$_GET['id'];
             $client=findByIdTable("client",$id);
@@ -125,11 +137,10 @@
         $adresseClient=$valeur['adresseClient'];
         $actions=
         "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
-        <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a> 
-        <a href='javascript:supprimer($id)' class='btn_action bg_red'>Supprimer</a>";
+        <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
         $ligne.="
             <tr class='h2em'>
-                <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>
+                <td class='border center'><img class='zoom' src='img/femme1.jpg' width='20%' alt='' /></td>
                 <td class='border center'>$numClient</td>
                 <td class='border'>$nomClient</td>
                 <td class='border right'>$adresseClient</td>

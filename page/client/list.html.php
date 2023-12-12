@@ -5,9 +5,10 @@
 <table class="w100">
     <thead>
         <tr class='h2em'>
+            <th class='w20 border'>IMAGE</th>
             <th class='w10 border'>N° Client</th>
             <th class='w10 border'>Nom Client</th>
-            <th class='w40 border'>Adresse Client</th>
+            <th class='w20 border'>Adresse Client</th>
             <th class='w40 border'>ACTIONS</th>
         </tr>
     </thead>

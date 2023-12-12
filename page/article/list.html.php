@@ -4,7 +4,7 @@
         <tr class='h2em'>
             <th class='w10 border'>IMAGE</th>
             <th class='w10 border'>CODE</th>
-            <th class='w50 border'>DESIGNATION</th>
+            <th class='w20 border'>DESIGNATION</th>
             <th class='w10 border'>PRIX<br>UNITAIRE</th>
             <th class='w20 border'>ACTIONS</th>
         </tr>
