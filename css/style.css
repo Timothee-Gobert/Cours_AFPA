@@ -58,6 +58,32 @@
     left: 50%; 
     visibility: hidden;
 }
+
+
+
+#modal_clt{
+    width: 98%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    visibility: hidden;
+}
+
+#modal_clt:target{
+    visibility: visible;
+}
+#modal_clt_content{
+    width: 50%;
+    height: 50%;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+}
 /*----------------------------------------------------------*/
 
 
