@@ -1,11 +1,11 @@
-create database dwwm_cmfp;
-use dwwm_cmfp;
+create database dwwm;
+use dwwm;
 show databases;
 create table article(
     id integer auto_increment primary key,
     numArticle varchar(20) not null unique,
-    designationArticle varchar(250) not null,
-    prixUnitaireArticle numeric(10,2)
+    designation varchar(250) not null,
+    prixUnitaire numeric(10,2)
 );
 insert into article (numArticle,designationArticle,prixUnitaireArticle) values
     ("BSA001","coca-cola",1.50),
@@ -31,7 +31,7 @@ insert into client (numClient,nomClient,adresseClient) values
 create table commande(
     id integer auto_increment primary key,
     numCommande varchar(20) not null unique,
-    dateCommande date default now() not null,
+    dateCommande datetime default now() not null,
     client_id int not null,
     foreign key (client_id) references client(id)
 );
@@ -52,26 +52,22 @@ create table ligneCommande (
     foreign key(article_id) references article(id)
 );
 insert into ligneCommande(commande_id,article_id,quantite) values
-    (7,9,15),
-    (7,12,85),
-    (7,13,45),
-    (7,11,65),
-    (8,15,87),
-    (8,15,69),
-    (8,14,61),
-    (8,15,12),
-    (8,11,10),
-    (9,16,68),
-    (9,14,15),
-    (9,12,15),
-    (4,14,68),
-    (4,15,85),
-    (4,13,95),
-    (4,9,85),
-    (5,10,45),
-    (5,11,65),
-    (5,15,35),
-    (5,16,17);
+    (1,2,15);,
+    (1,2,85),
+    (1,3,45),
+    (2,1,65),
+    (2,5,87),
+    (2,5,69),
+    (2,4,61),
+    (2,5,12),
+    (2,1,10),
+    (2,6,68),
+    (3,4,15),
+    (3,2,15),
+    (3,4,68),
+    (4,5,85),
+    (4,3,95),
+    (4,2,85);
 --- tp 2
 select
 coalesce(numCommande ,"") "N° Commande",
