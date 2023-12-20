@@ -20,7 +20,7 @@
 
       <tfoot>
             <tr class='h2em'>
-                  <th colspan="5" class='w100 border center'> Nombre articles: </th>
+                  <th colspan="5" class='w100 border center'> Nombre articles: <span id="nbre_art"><?=$nbre?></span></th>
             </tr>
       </tfoot>
 </table>

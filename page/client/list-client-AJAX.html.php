@@ -20,7 +20,7 @@
 
       <tfoot>
             <tr class='h2em'>
-                  <th colspan="5" class='w100 border center'> Nombre clients: $nbre </th>
+                  <th colspan="5" class='w100 border center'> Nombre clients: <span id="nbre_client"><?=$nbre?></span> </th>
             </tr>
       </tfoot>
 </table>

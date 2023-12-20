@@ -1,6 +1,24 @@
 <?php
 require_once("config.php");
-// nouvelle facon de se connecter avec filezilla
+
+function getDescribeTable($table){
+    $connexion=connexion();
+    $sql="desc $table";  // requete pour affichage de la structure la table collaborateur
+    $requete=$connexion->prepare($sql);
+    $requete->execute();
+    $colonnes=$requete->fetchAll(PDO::FETCH_COLUMN);// recuperation de tous les noms de colonne de la table collaborateur
+    /* sans avoir une bonne methode on devait initialiser la variavle tableau en :
+    $variables=[
+        'id'=>'',
+        'civilite'=>'',
+        'nom'=>'',
+    ];*/
+    $variables=[];
+    foreach($colonnes as $valeur){
+        $variables[$valeur]='';
+    }  
+    return $variables;  
+}
 
 function connexion($host=HOST,$dbname=DBNAME,$user=USER,$password=PASSWORD){
     $dns="mysql:host=$host;dbname=$dbname;charset=utf8";

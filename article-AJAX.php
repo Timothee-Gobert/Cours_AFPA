@@ -2,7 +2,7 @@
     require_once("./service/myFct.php");
 
     $action='list';
-    $sousPageHtml="./page/article/form.html.php";
+    // $sousPageHtml="./page/article/form.html.php";
     extract($_GET);
 
     switch($action){
@@ -111,7 +111,7 @@
             $test=testDelete($id);
             if($test){
                 deleteByIdTable('article',$id);
-                $sousPageHtml="./page/article/list.html.php";
+                $sousPageHtml="./list.html.php";
                 generatePage($sousPageHtml);
             }else{
                 $sousPageHtml="page/erreur/erreur.html.php";
@@ -121,31 +121,33 @@
             }
             break;
         default:
-
+        $articles=listTable('article');
+        $nbre=count($articles);
+        $ligne="";
+        foreach($articles as $valeur){
+            $id=$valeur['id'];
+            $numArticle=$valeur['numArticle'];
+            $designation=$valeur['designation'];
+            $prixUnitaire=$valeur['prixUnitaire'];
+            // les trois ligne du dessus peuvent etre remplacer par :
+            // extract($valeur)
+            $actions=
+            "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
+            <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
+            $ligne.="
+                <tr class='h2em'>
+                    <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>
+                    <td class='border center'>$numArticle</td>
+                    <td class='border'>$designation</td>
+                    <td class='border right'>$prixUnitaire</td>
+                    <td class='border flex_space_between'>$actions</td>
+                 </tr>
+            ";
+        }
         break;
     }
 
-    $articles=listTable('article');
-    $nbre=count($articles);
-    $ligne="";
-    foreach($articles as $valeur){
-        $id=$valeur['id'];
-        $numArticle=$valeur['numArticle'];
-        $designation=$valeur['designation'];
-        $prixUnitaire=$valeur['prixUnitaire'];
-        $actions=
-        "<a href='javascript:afficher($id)' class='btn_action bg_navy'>Afficher</a> 
-        <a href='javascript:modifier($id)' class='btn_action bg_blue'> Modifier</a>";
-        $ligne.="
-            <tr class='h2em'>
-                <td class='border center'><img class='zoom' src='img/bb0001.png' width='20%' alt='' /></td>
-                <td class='border center'>$numArticle</td>
-                <td class='border'>$designation</td>
-                <td class='border right'>$prixUnitaire</td>
-                <td class='border flex_space_between'>$actions</td>
-             </tr>
-        ";
-    }
+    
     $sousPageHtml="page/article/list-AJAX.html.php";
     $variables=[
         'rows'=>$ligne,

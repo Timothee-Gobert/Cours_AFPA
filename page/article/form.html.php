@@ -1,4 +1,4 @@
-<h1 class="titre text-white">SAISIE ARTICLE</h1>
+<h1 class="titre text-white">SAISIE ARTItytyCLE</h1>
 <a href="" class="text-white modal_close">&times</a>
 <a href="article.php?action=creer" class="btn bg-green"></a>
 <table class="w100 text-white">
